@@ -9,8 +9,8 @@ body {
 }
 
 #game-container { 
-    width: 1280px;
-    height: 720px;
+    width: 100vw;
+    height: 100vh;
     background-color: white;
     border: 2px solid #333;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -31,8 +31,8 @@ body {
 
 #world {
     position: absolute;
-    width: 3000px;   /* Example world size */
-    height: 2000px;
+    width: 8000px;   /* Much bigger world size */
+    height: 5000px;
     background: repeating-linear-gradient(45deg, #f8f8f8 0 40px, #e0e0e0 40px 80px);
 }
 
@@ -42,11 +42,33 @@ body {
     border-radius: 50%;
     position: absolute;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    will-change: transform, left, top;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+    padding: 0 4px;
+    line-height: 1;
+    user-select: none;
+}
+
+#circle.active, .other-ball.active {
+    transition:
+        width 0.33s cubic-bezier(.4,1.6,.6,1),
+        height 0.33s cubic-bezier(.4,1.6,.6,1),
+        transform 0.5s cubic-bezier(.4,1.6,.6,1);
 }
 
 #sidebar {
     width: 200px;
     min-height: 720px;
+    max-height: 720px;
     background: #fff;
     border: 2px solid #333;
     margin-left: 20px;
@@ -55,4 +77,117 @@ body {
     color: #222;
     padding: 20px 10px;
     box-sizing: border-box;
+    overflow-y: auto; /* Enable vertical scrollbar */
+}
+
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+#sidebar li {
+    background: #f3f7fa;
+    margin-bottom: 10px;
+    padding: 7px 8px;
+    border-radius: 8px;
+    font-size: 15px;           /* Smaller font size */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    word-break: break-all;
+    white-space: nowrap;       /* Prevent line breaks */
+    overflow: hidden;          /* Hide overflow */
+    text-overflow: ellipsis;   /* Show ... if too long */
+}
+
+#sidebar li.player {
+    background: #e0f7fa;
+    font-weight: bold;
+    font-size: 16px;           /* Slightly larger for player */
+    border-left: 4px solid #00bfff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#sidebar b {
+    font-size: 1.2em;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.removed {
+    display: none !important;
+}
+
+#start-overlay {
+    position: fixed;
+    z-index: 10001;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#start-form {
+    background: #fff;
+    padding: 40px 32px 32px 32px;
+    border-radius: 16px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+    min-width: 260px;
+}
+#start-form h2 {
+    margin: 0 0 10px 0;
+    font-size: 2em;
+}
+#start-form label {
+    font-size: 1.1em;
+    color: #222;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+#player-name {
+    font-size: 1em;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+    margin-top: 2px;
+    width: 180px;
+}
+#player-color {
+    margin-top: 2px;
+    width: 50px;
+    height: 32px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+#start-btn {
+    margin-top: 10px;
+    font-size: 1.2em;
+    padding: 10px 30px;
+    border-radius: 8px;
+    border: none;
+    background: #00bfff;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#start-btn:hover {
+    background: #0099cc;
+}
+
+.food-ball {
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+    z-index: 1;
+    pointer-events: none;
 }
